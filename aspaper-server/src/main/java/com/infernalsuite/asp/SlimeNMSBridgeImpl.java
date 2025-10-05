@@ -1,8 +1,5 @@
 package com.infernalsuite.asp;
 
-import ca.spottedleaf.dataconverter.converters.DataConverter;
-import ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry;
-import ca.spottedleaf.dataconverter.types.nbt.NBTMapType;
 import com.infernalsuite.asp.api.SlimeDataConverter;
 import com.infernalsuite.asp.api.SlimeNMSBridge;
 import com.infernalsuite.asp.api.world.SlimeWorld;
@@ -167,7 +164,7 @@ public class SlimeNMSBridgeImpl implements SlimeNMSBridge {
 
     @Override
     public int getCurrentVersion() {
-        return SharedConstants.getCurrentVersion().getDataVersion().getVersion();
+        return SharedConstants.getCurrentVersion().dataVersion().version();
     }
 
     public void registerWorld(SlimeLevelInstance server) {
@@ -200,14 +197,6 @@ public class SlimeNMSBridgeImpl implements SlimeNMSBridge {
         } catch (IOException ex) {
             throw new RuntimeException(ex); // TODO do something better with this?
         }
-
-        // level.setReady(true);
-        level.setSpawnSettings(world.getPropertyMap().getValue(SlimeProperties.ALLOW_MONSTERS));
-
-        CompoundTag nmsExtraData = (CompoundTag) Converter.convertTag(CompoundBinaryTag.from(world.getExtraData()));
-
-        //Attempt to read PDC
-        if (nmsExtraData.get("BukkitValues") != null) level.getWorld().readBukkitValues(nmsExtraData.get("BukkitValues"));
 
         return level;
     }
